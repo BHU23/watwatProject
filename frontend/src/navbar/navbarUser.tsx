@@ -24,11 +24,11 @@ export default function NavbarUser() {
         <>
             <div className='horizontal-menu'>
                 <ul>
-                    <li className='manu-1'><NavLink to="./main">หน้าหลัก</NavLink></li>
-                    <li className='manu-2'><NavLink to="./eventRequest">ขอจัดกิจกรรม</NavLink></li>
-                    <li className='manu-3'><NavLink to="./itemRequest">ขอใช้สถานที่</NavLink></li>
-                    <li className='manu-4'><NavLink to="./placeRequest">ขอยืม/คืนสิ่งของ</NavLink></li>
-                    <li className='manu-5'><NavLink to="./donate">บริจาค</NavLink></li>
+                    <li className='manu-1'><NavLink to="./main"><span>หน้าหลัก</span></NavLink></li>
+                    <li className='manu-2'><NavLink to="./eventRequest"><span>ขอจัดกิจกรรม</span></NavLink></li>
+                    <li className='manu-3'><NavLink to="./itemRequest"><span>ขอใช้สถานที่</span></NavLink></li>
+                    <li className='manu-4'><NavLink to="./placeRequest"><span>ขอยืม/คืนสิ่งของ</span></NavLink></li>
+                    <li className='manu-5'><NavLink to="./donate"><span>บริจาค</span></NavLink></li>
                 </ul>
             </div>
             {/* <Routes>

@@ -70,3 +70,9 @@
     color: #F0A500;
     border-top: 5px solid #334756;
 }
+
+.horizontal-menu li a.active span {
+    color: #F0A500;
+    position: relative;
+    top: -2.5px;
+}

@@ -10,7 +10,8 @@ Link,
 NavLink,
 } from "react-router-dom";
 import Logout from './bnt/logout';
-import NavbarUser from '../Routes/navbarUser';
+import NavbarUser from '../navbar/navbarUser';
+import NavbarCreater from '../navbar/navbarCreater';
 function Header() {
   return (
     <header>
@@ -20,7 +21,8 @@ function Header() {
             <span style={{ padding: "20px", fontWeight:"600", fontSize:"30px"}}>Wat Wat</span>
           </Link>
           <div className="horizontal">
-            <NavbarUser/>
+          <NavbarUser />
+          <NavbarCreater/>
           </div>
           <div className='bnt-menu'>
             <Logout/>
