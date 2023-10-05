@@ -26,12 +26,16 @@ import AddPlaceUse from "./pages/pagesCreater/addPlaceUse";
 import AddItemLoan from "./pages/pagesCreater/addItemLoan";
 import CreateWatData from "./pages/pagesCreater/createWatData";
 
+import RequsetEvent from './pages/pagesCreater/requestEvent';
+import EventDetails from './pages/pagesCreater/requestEvent/eventDetails.tsx';
+
 import UserLayout from "./layouts/userLayout"
 import LoginLayout from "./layouts/loginLayout";
 import AdminLayout from "./layouts/adminLayout";
 import CreatorLayout from "./layouts/creatorLayout";
 import Header from './component/header';
 import Footer from './component/footer';
+import SidebarCreater from './navbar/sidebarCreater';
 // const router = createBrowserRouter(
 //   createRoutesFromElements(
 //     <>
@@ -86,6 +90,9 @@ function App() {
         <Route path="/addItemLoan" element={<AddItemLoan />} />
         <Route path="/addPlacUse" element={<AddPlaceUse />} />
         <Route path="/ceratrWatData" element={<CreateWatData />} />
+
+        <Route path="/requsetEvent" element={<RequsetEvent />} />
+        <Route path="/requsetEvent/eventDetails" element={<EventDetails />} />
       </Routes>
       <Footer></Footer>
     </Router>

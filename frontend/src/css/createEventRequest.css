@@ -162,7 +162,7 @@ span.more {
 .item:first-child{
     grid-column: 1/4;
 }
-.data.place{
+/* .data.place{
     display: grid;
     grid-template-columns: 1.6fr 1.5fr 3fr;
     grid-template-rows: repeat(2f, 1fr);
@@ -176,7 +176,7 @@ span.more {
     border-radius: 10px;
     color: #ffff;
     background-color: #334756;
-}
+} */
 .placeOut{
     display: grid;
     grid-template-columns: 1fr;
@@ -251,7 +251,7 @@ span.more {
     border-radius: 0 10px 10px 0;
 }
 
-select {
+.selects {
     border: none;
     background: transparent;
     -webkit-appearance: none;
@@ -261,7 +261,7 @@ select {
     min-width: 150px;
 }
 
-select option {
+.selects option {
     color: #334756;
     background: #ffff;
 }

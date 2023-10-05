@@ -1,9 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Prompt&family=Sarabun:wght@200;300;600&family=Sriracha&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Prompt&family=Sarabun:wght@200;300;600&family=Sriracha&display=swap');
 
 * {
   box-sizing: border-box;
   font-family: Sarabun;
   font-weight: bolder;
+} */
+
+@import url('https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Prompt&family=Sarabun:wght@100;200&family=Sriracha&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'Prompt', 'Sarabun';
 }
 body{
   /* width: 100vw;

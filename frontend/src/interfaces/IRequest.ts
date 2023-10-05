@@ -1,4 +1,4 @@
-export interface PlacesInterface {
+export interface RequestInterface {
 
     ID?: number;
     Note?: string | null;

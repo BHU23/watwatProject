@@ -1,8 +1,8 @@
-import { EventsInterface } from "../../../interfaces/IEvent";
+import { RequestInterface } from "../../../interfaces/IRequest";
 
 const apiUrl = "http://localhost:8080";
 
-async function GetEvents() {
+async function GetRequests() {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -10,7 +10,7 @@ async function GetEvents() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/events`, requestOptions)
+  let res = await fetch(`${apiUrl}/requests`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -22,36 +22,16 @@ async function GetEvents() {
 
   return res;
 }
-
-// มีที่เดียว
-async function GetEventTypes() {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
-  let res = await fetch(`${apiUrl}/eventTypes`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-
-  return res;
-}
-
-
-async function DeleteEventByID(id: Number | undefined) {
+//GetplaceUse =>../services/https/placeUse"
+//GetItemloan => ../services/https/Itemloan"
+//GetEvent => ../services/https/event"
+//GetStatus => ../services/https/status"
+async function DeleteRequestByID(id: Number | undefined) {
   const requestOptions = {
     method: "DELETE"
   };
 
-  let res = await fetch(`${apiUrl}/events/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/requests/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -64,12 +44,12 @@ async function DeleteEventByID(id: Number | undefined) {
   return res;
 }
 
-async function GetEventById(id: Number | undefined) {
+async function GetRequestById(id: Number | undefined) {
   const requestOptions = {
     method: "GET"
   };
 
-  let res = await fetch(`${apiUrl}/events/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/requests/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -83,14 +63,14 @@ async function GetEventById(id: Number | undefined) {
 }
 
 
-async function CreateEvent(data: EventsInterface) {
+async function CreateRequest(data: RequestInterface) {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/events`, requestOptions)
+  let res = await fetch(`${apiUrl}/requests`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -103,14 +83,14 @@ async function CreateEvent(data: EventsInterface) {
   return res;
 }
 
-async function UpdateEvent(data: EventsInterface) {
+async function UpdateRequest(data: RequestInterface) {
   const requestOptions = {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/events`, requestOptions)
+  let res = await fetch(`${apiUrl}/requests`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -124,10 +104,9 @@ async function UpdateEvent(data: EventsInterface) {
 }
 
 export {
-  GetEvents,
-  GetEventById,
-  GetEventTypes,
-  CreateEvent,
-  DeleteEventByID,
-  UpdateEvent
+  GetRequests,
+  DeleteRequestByID,
+  GetRequestById,
+  CreateRequest,
+  UpdateRequest,
 };
