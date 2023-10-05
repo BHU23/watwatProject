@@ -9,5 +9,4 @@ type EventType struct {
 	Name string `gorm:"uniqueIndex"`
 
 	Events    []Event    `gorm:"foreignKey:EventTypeID"`
-	PlaceUses []PlaceUse `gorm:"foreignKey:EventTypeID"`
 }

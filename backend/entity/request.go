@@ -25,6 +25,4 @@ type Request struct {
 
 	StatusID *uint
 	Status   Status `gorm:"foreignKey:StatusID"`
-
-	MemberRequests []MemberRequest `gorm:"foreignKey:RequestID"`
 }

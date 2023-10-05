@@ -13,12 +13,12 @@ type Wat struct {
 	District    string
 	Subdistrict string
 
-	MemberID   *uint
-	Member Member `gorm:"foreignKey:MemberID"`
+	MemberID *uint
+	Member   Member `gorm:"foreignKey:MemberID"`
 
-	Places  []Place  `gorm:"foreignKeyID:WatID"`
-	Items  []Item  `gorm:"foreignKeyID:WatID"`
-	Monks   []Monk   `gorm:"foreignKeyID:WatID"`
-	Donates []Donate `gorm:"foreignKeyID:WatID"`
+	Places     []Place      `gorm:"foreignKeyID:WatID"`
+	Items      []Item       `gorm:"foreignKeyID:WatID"`
+	Monks      []Monk       `gorm:"foreignKeyID:WatID"`
+	Donates    []Donate     `gorm:"foreignKeyID:WatID"`
 	AccountWat []AccountWat `gorm:"foreignKeyID:WatID"`
 }

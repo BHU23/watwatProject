@@ -1,16 +1,18 @@
 import '../../../../css/createEventRequest.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import {Form, message,} from "antd";
 import { IoIosAdd } from "react-icons/io";
 import SubmitButton from '../../../../component/bnt/submitButton';
 import { EventsInterface } from "../../../../interfaces/IEvent";
-import { CreateEvent } from "../../../../services/https/event";
+import { EventTypesInterface } from "../../../../interfaces/IEventType";
+import { CreateEvent, GetEventTypes } from "../../../../services/https/event";
 
 function CreateEventRequest() {
   let navigate = useNavigate();
-    const [messageApi, contextHolder] = message.useMessage();
-    const [input, setInput] = useState({
+  const [messageApi, contextHolder] = message.useMessage();
+  const [eventTypes, setEventTypes] = useState<EventTypesInterface[]>([]);
+  const [input, setInput] = useState({
       EventName: '',
       DateBegin: '',
       TimeOfBegin: '',
@@ -19,15 +21,17 @@ function CreateEventRequest() {
       OutPlace: '',
       UserTel: '',
       Description: '',
-      EventID: '',
-      EventTypeID: '',
-      StatusID: '',
-    })
+    // EventID: '',
+      EventTypeID: 0 ,
+      // StatusID: '',
+  })
 
     const handleInput  = (e:any) => {
       setInput({
-        ...input,[e.target.name]: e.target.value
+        ...input, [e.target.name]: e.target.value,
+        EventTypeID: e.target.value,
       });
+
     }
 
     const handleSubmit  = async (values: EventsInterface) => {
@@ -37,10 +41,11 @@ function CreateEventRequest() {
       values.DateEnd = input.DateEnd
       values.TimeOfEnd = input.TimeOfEnd
       values.OutPlace = input.OutPlace
+      values.UserTel = input.UserTel
       values.Description = input.Description
-      values.EventID = 1
-      values.EventTypeID = 1
-      values.StatusID = 1
+      // values.EventID = 1
+      values.EventTypeID = input.EventTypeID
+      // values.StatusID = 1
       
       let res = await CreateEvent(values);
       if (res.status) {
@@ -57,7 +62,18 @@ function CreateEventRequest() {
         content: "บันทึกข้อมูลไม่สำเร็จ",
       });
     }
+  }
+  
+  const getEventType = async () => {
+    let res = await GetEventTypes();
+    if (res) {
+      setEventTypes(res);
     }
+  };
+
+  useEffect(() => {
+    getEventType();
+  }, []);
   return (
     <>
       {contextHolder}
@@ -80,15 +96,14 @@ function CreateEventRequest() {
             <select
               id="eventType"
               className='selects'
-              name="EventType"
+              name="EventTypeID"
               onChange={handleInput}
+              value={input.EventTypeID}
               required 
             >
-                <option value="/">ประเภท</option>
-                <option value="merit">งานบุญ</option>
-                <option value="ordinationCeremony">งานบวช</option>
-                <option value="funeral">งานศพ</option>
-                <option value="other">อื่นๆ</option>
+              {eventTypes.map((item) => (
+                    <option value={item.ID} key={item.EventTypeName}>{item.ID}</option>
+                  ))}
               </select>
           </div>
         </div>
@@ -98,15 +113,15 @@ function CreateEventRequest() {
                 <label htmlFor="">รายนาม-เจ้าภาพ</label>
                 <IoIosAdd className='icon plusHosts' />
               </div>
-              <input 
+              {/* <input 
                 type="text" 
                 id="้host1" 
                 className="้host h1" 
                 placeholder='1.'
                 name="HostName"
-                // onChange={handleInput}
-                // required 
-                />
+                onChange={handleInput}
+                required 
+                /> */}
               {/* <input 
                 type="text" 
                 id="้host2" 
@@ -161,7 +176,7 @@ function CreateEventRequest() {
           </div>
           <div className="data tel">
               <label htmlFor="" className='item'>เบอร์โทรศัพท์</label>
-            <input type="tel" id="" placeholder='กรอกเบอร์โทร Ex.04444444444' className='item'
+            <input type="text" id="" placeholder='กรอกเบอร์โทร Ex.04444444444' className='item'
               name="UserTel"
               onChange={handleInput}
               required/>
@@ -187,7 +202,7 @@ function CreateEventRequest() {
               onChange={handleInput}
               required/>
             </div>
-          <div className="data entertrainment">
+          {/* <div className="data entertrainment">
             <label htmlFor="">กิจกรรมนี้เป็นมหรสพใช่หรือไม่<span className='more'> (หากใช่กรุนากรอกเลขที่กิจกกรมที่เป็นกิจกรรมหลัก)</span></label>
             <div className='entertrainments'>
               <input type="radio" id="switch_left" name="switchToggle" value=""/> <label htmlFor="switch_left">ใช่</label>
@@ -197,14 +212,13 @@ function CreateEventRequest() {
               name="EventID"
               onChange={handleInput}
               required/>
-          </div>
+          </div> */}
           <div className="data description">
             <label htmlFor="">คำอธิบายกิจกรรม</label>
             <textarea
               id="description"
               name="Description"
               onChange={handleInput}
-              required
             />
           </div>
           <div className='submitEventRequest'>

@@ -3,7 +3,7 @@ package controller
 import (
 	"net/http"
 
-	"github.com/BHU23/WATWAT/entity"
+	"github.com/BHU23/watwatProject/entity"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,9 +11,8 @@ import (
 func CreateEvent(c *gin.Context) {
 	var event entity.Event
 	var eventType entity.EventType
-	// var placeUse entity.PlaceUse สร้าง แล้ว upDate PlaceUse
-	var eventMain entity.Event
-	var status entity.Status
+	// var eventMain entity.Event
+	// var status entity.Status
 
 	// bind เข้าตัวแปร Event
 	if err := c.ShouldBindJSON(&event); err != nil {
@@ -27,17 +26,17 @@ func CreateEvent(c *gin.Context) {
 		return
 	}
 
-	// ค้นหา eventMain ด้วย id
-	if tx := entity.DB().Where("id = ?", event.EventTypeID).First(&eventMain); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "eventType not found"})
-		return
-	}
+	// // ค้นหา eventMain ด้วย id
+	// if tx := entity.DB().Where("id = ?", event.EventID).First(&eventMain); tx.RowsAffected == 0 {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "eventType not found"})
+	// 	return
+	// }
 
-	// ค้นหา status ด้วย id
-	if tx := entity.DB().Where("id = ?", event.Status).First(&status); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "status not found"})
-		return
-	}
+	// // ค้นหา status ด้วย id
+	// if tx := entity.DB().Where("id = ?", event.Status).First(&status); tx.RowsAffected == 0 {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "status not found"})
+	// 	return
+	// }
 
 	// สร้าง event
 	u := entity.Event{
@@ -45,13 +44,13 @@ func CreateEvent(c *gin.Context) {
 		DateBegin:   event.DateBegin,
 		TimeOfBegin: event.TimeOfBegin,
 		DateEnd:     event.DateEnd,
-		TimeOfEnd:   event.TimeOfBegin,
+		TimeOfEnd:   event.TimeOfEnd,
 		OutPlace:    event.OutPlace,
 		UserTel:     event.UserTel,
 		Description: event.Description,
-		ParentEvent: &eventMain,
-		EventType: 	eventType,
-		Status:    	status,
+		// ParentEvent: &eventMain,
+		EventType: eventType,
+		// Status:    	status,
 	}
 
 	// บันทึก

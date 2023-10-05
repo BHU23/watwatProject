@@ -18,25 +18,36 @@ func SetupDatabease(){
 	}
 
 	database.AutoMigrate(
-		&AccountWat{},
-		&Donate{},
-		&DonateType{},
-		&Donate{},
+		// &AccountWat{},
+		// &Donate{},
+		// &DonateType{},
+		// &Donate{},
 		&Event{},
 		&EventType{},
 		&Host{},
-		&Item{},
-		&ItemLoan{},
-		&ItemLoanItem{},
-		&Member{},
-		&MemberRequest{},
-		&Monk{},
-		&Place{},
-		&PlaceUse{},
-		&PlaceUsePlace{},
-		&Request{},
-		&Role{},
+		// &Item{},
+		// &ItemLoan{},
+		// &ItemLoanItem{},
+		// &Member{},
+		// &MemberRequest{},
+		// &Monk{},
+		// &Place{},
+		// &PlaceUse{},
+		// &PlaceUsePlace{},
+		// &Request{},
+		// &Role{},
 		&Status{},
 	)
 	db = database
+
+	// EventType Data
+	Pawat := EventType{
+		Name: "เพวศ",
+	}
+	db.Model(&EventType{}).Create(&Pawat)
+
+	Sop := EventType{
+		Name: "ศพ",
+	}
+	db.Model(&EventType{}).Create(&Sop)
 }

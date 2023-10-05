@@ -1,3 +1,5 @@
+import { EventTypesInterface } from "./IEventType";
+
 export interface EventsInterface {
 
   ID?: number;
@@ -7,9 +9,11 @@ export interface EventsInterface {
   DateEnd?: string;
   TimeOfEnd?: string;
   OutPlace?: string;
-  UserTel?: number;
+  UserTel?: string;
   Description?: string | null;
-  EventID?: number | null;
-  EventTypeID?: number ;
-  StatusID?: number ;
+  // EventID?: EventTypesInterface;
+  EventTypeID?: number;
+  EventType?: EventTypesInterface;
+  // StatusID?: number | null;
+
 }
