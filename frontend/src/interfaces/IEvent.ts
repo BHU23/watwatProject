@@ -17,6 +17,5 @@ export interface EventsInterface {
   EventType?: EventTypesInterface;
   StatusID?: number;
   Status?: StatusesInterface;
-
-  HostName?: string;
+  HostName?: string ;
 }

@@ -14,11 +14,16 @@ func CreateEvent(c *gin.Context) {
 	var eventMain entity.Event
 	var status entity.Status
 
-	// var eventHost entity.Event
 	var host entity.Host
 
 	// bind เข้าตัวแปร Event
 	if err := c.ShouldBindJSON(&event); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// bind เข้าตัวแปร host
+	if err := c.ShouldBindJSON(&host); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -45,7 +50,6 @@ func CreateEvent(c *gin.Context) {
 		return
 	}
 
-	// if event.EventID != nil {
 	u := entity.Event{
 		EventName:   event.EventName,
 		DateBegin:   event.DateBegin,
@@ -66,8 +70,8 @@ func CreateEvent(c *gin.Context) {
 	}
 
 	h := entity.Host{
-		HostName: host.HostName,
-		EventID:    u.ID,
+		HostName: 	host.HostName,
+		EventID:    &u.ID,
 	}
 
 	if err := entity.DB().Create(&h).Error; err != nil {
@@ -77,45 +81,6 @@ func CreateEvent(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": u})
 	c.JSON(http.StatusOK, gin.H{"data": h})
-	// } else {
-	// 	u := entity.Event{
-	// 		EventName:   event.EventName,
-	// 		DateBegin:   event.DateBegin,
-	// 		TimeOfBegin: event.TimeOfBegin,
-	// 		DateEnd:     event.DateEnd,
-	// 		TimeOfEnd:   event.TimeOfEnd,
-	// 		OutPlace:    event.OutPlace,
-	// 		UserTel:     event.UserTel,
-	// 		Description: event.Description,
-	// 		EventType:   eventType,
-	// 		Status:      status,
-	// 	}
-	// 	// บันทึก
-	// 	if err := entity.DB().Create(&u).Error; err != nil {
-	// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 		return
-	// 	}
-
-	// 	c.JSON(http.StatusOK, gin.H{"data": u})
-	// }
-	// สร้าง event
-
-	// bind เข้าตัวแปร host
-	// if err := c.ShouldBindJSON(&host); err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
-
-	// h := entity.Host{
-	// 	HostName: host.HostName,
-	// 	Event:    u.ID,
-	// }
-	// // บันทึก
-	// if err := entity.DB().Create(&h).Error; err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
-	// สร้าง host
 }
 
 // GET /event/:id

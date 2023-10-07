@@ -68,9 +68,9 @@ function CreateEventRequest() {
       values.Description = input.Description
       values.EventID = input.EventID
       values.EventTypeID = input.EventTypeID
-    values.StatusID = input.StatusID
+      values.StatusID = input.StatusID
+      values.HostName = input.HostName
     
-      
       let res = await CreateEvent(values);
       if (res.status) {
       messageApi.open({
@@ -88,25 +88,6 @@ function CreateEventRequest() {
       });
     }
 
-    // values1.HostName = input.HostName
-    // let eventHost = await GetEvents();
-    // values1.EventID = eventHost
-    // let res1 = await CreateHost(values1);
-    //   if (res1.status) {
-    //   messageApi.open({
-    //     type: "success",
-    //     content: "บันทึกข้อมูลสำเร็จ",
-    //   });
-    //   setTimeout(function () {
-    //     navigate("/");
-    //   }, 2000);
-      
-    // } else {
-    //   messageApi.open({
-    //     type: "error",
-    //     content: "บันทึกข้อมูลไม่สำเร็จ",
-    //   });
-    // }
   }
   
   const getEventType = async () => {

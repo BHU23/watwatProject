@@ -23,8 +23,6 @@ func main() {
 	r.GET("/eventTypes", controller.ListEventTypes)
 	// Status Routes
 	r.GET("/statuses", controller.ListEventTypes)
-	// Host Routes
-	r.POST("/hosts", controller.CreateHost)
 	
 	r.Run()
 	
