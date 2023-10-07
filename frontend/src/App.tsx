@@ -52,7 +52,7 @@ import SidebarCreater from './navbar/sidebarCreater';
 //         <Route path="/donate" element={<Donate />} />
 //         <Route path="/eventRequest/createEventRequest" element={<CreateEventRequest />} />
 //       </Route>
-//       <Route path="/admin" element={<AdminLayout/>}>
+//       <Route path="" element={<AdminLayout/>}>
         
 //       </Route>
 //       <Route path="" element={<CreatorLayout/>}>

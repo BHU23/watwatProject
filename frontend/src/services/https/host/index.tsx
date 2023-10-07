@@ -1,5 +1,5 @@
-import { HostsInterface } from "../../../interfaces/Ihost";
-
+import { HostsInterface } from "../../../interfaces/IHost";
+import { EventsInterface } from "../../../interfaces/IEvent";
 const apiUrl = "http://localhost:8080";
 
 async function GetHosts() {
@@ -61,7 +61,7 @@ async function GetHostById(id: Number | undefined) {
 }
 
 
-async function CreateHost(data: HostsInterface) {
+async function CreateHost(data: EventsInterface) {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },

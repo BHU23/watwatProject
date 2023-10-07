@@ -24,7 +24,7 @@ type Event struct {
 	StatusID *uint
 	Status   Status `gorm:"foreignKey:StatusID"`
 
-	// ChildEvents []Event    `gorm:"foreignKey:EventID"`
+	ChildEvents []Event    `gorm:"foreignKey:EventID"`
 	Hosts       []Host     `gorm:"foreignKey:EventID"`
 	// Requests    []Request  `gorm:"foreignKey:EventID"`
 	// PlaceUses   []PlaceUse `gorm:"foreignKey:EventID"`

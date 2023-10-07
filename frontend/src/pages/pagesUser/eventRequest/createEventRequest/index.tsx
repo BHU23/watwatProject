@@ -5,8 +5,10 @@ import {Form, message,} from "antd";
 import { IoIosAdd } from "react-icons/io";
 import SubmitButton from '../../../../component/bnt/submitButton';
 import { EventsInterface } from "../../../../interfaces/IEvent";
+import { HostsInterface } from '../../../../interfaces/IHost';
 import { EventTypesInterface } from "../../../../interfaces/IEventType";
-import { CreateEvent, GetEventTypes } from "../../../../services/https/event";
+import { CreateEvent, GetEventTypes, GetEvents } from "../../../../services/https/event";
+import { CreateHost } from '../../../../services/https/host';
 
 function CreateEventRequest() {
   let navigate = useNavigate();
@@ -21,20 +23,41 @@ function CreateEventRequest() {
       OutPlace: '',
       UserTel: '',
       Description: '',
-    // EventID: '',
-      EventTypeID: 0 ,
-      // StatusID: '',
+      EventID: null,
+      EventTypeID: 1 ,
+      StatusID: 1,
+      HostName: '',
   })
+  const handleInput  = (e:any) => {
+    const { name, value } = e.target;
 
-    const handleInput  = (e:any) => {
+    if (name === "EventTypeID") {
       setInput({
-        ...input, [e.target.name]: e.target.value,
-        EventTypeID: e.target.value,
+        ...input,
+        [name]: parseInt(value, 10), // Convert the value to an integer
       });
-
+    } else if (name === "EventID") {
+      if (value != null) {
+        setInput({
+          ...input,
+          [name]: parseInt(value, 10), // Convert the value to an integer
+        });
+      } else {
+        setInput({
+          ...input,
+          [name]: null, // Convert the value to an integer
+        });
+      }
+    }else {
+      setInput({
+        ...input,
+        [name]: value,
+      });
     }
+  };
 
-    const handleSubmit  = async (values: EventsInterface) => {
+  // const handleSubmit = async (values: EventsInterface, values1: HostsInterface) => {
+  const handleSubmit = async (values: EventsInterface) => {
       values.EventName = input.EventName
       values.DateBegin = input.DateBegin
       values.TimeOfBegin = input.TimeOfBegin
@@ -43,9 +66,10 @@ function CreateEventRequest() {
       values.OutPlace = input.OutPlace
       values.UserTel = input.UserTel
       values.Description = input.Description
-      // values.EventID = 1
+      values.EventID = input.EventID
       values.EventTypeID = input.EventTypeID
-      // values.StatusID = 1
+    values.StatusID = input.StatusID
+    
       
       let res = await CreateEvent(values);
       if (res.status) {
@@ -56,12 +80,33 @@ function CreateEventRequest() {
       setTimeout(function () {
         navigate("/");
       }, 2000);
+      
     } else {
       messageApi.open({
         type: "error",
         content: "บันทึกข้อมูลไม่สำเร็จ",
       });
     }
+
+    // values1.HostName = input.HostName
+    // let eventHost = await GetEvents();
+    // values1.EventID = eventHost
+    // let res1 = await CreateHost(values1);
+    //   if (res1.status) {
+    //   messageApi.open({
+    //     type: "success",
+    //     content: "บันทึกข้อมูลสำเร็จ",
+    //   });
+    //   setTimeout(function () {
+    //     navigate("/");
+    //   }, 2000);
+      
+    // } else {
+    //   messageApi.open({
+    //     type: "error",
+    //     content: "บันทึกข้อมูลไม่สำเร็จ",
+    //   });
+    // }
   }
   
   const getEventType = async () => {
@@ -84,52 +129,62 @@ function CreateEventRequest() {
         className='warpper' >
         <div className="heandcontantcreate">
           <div className="heandpage title">ขอจัดกิจกรรม</div>
-          <div className='heandpage eventRequest'><Link to="../EventRequest">กิจกรรมที่แจ้งขอจัด</Link></div>
+          <div className='heandpage eventRequest'>
+            <Link to="../EventRequest">กิจกรรมที่แจ้งขอจัด</Link>
+          </div>
           <div className="formNameEvent">
             <input type="text"
               className="heandpage nameEvent"
               placeholder='กรอกชื่อกิจกรรม'
               name="EventName"
               onChange={handleInput}
-              required 
+              // required 
             />
+            
             <select
               id="eventType"
               className='selects'
               name="EventTypeID"
+              value={input.EventTypeID} // Set the selected value based on the state
               onChange={handleInput}
-              value={input.EventTypeID}
-              required 
+              // required 
             >
               {eventTypes.map((item) => (
-                    <option value={item.ID} key={item.EventTypeName}>{item.ID}</option>
+                <option value={item.ID} key={item.EventTypeName}>
+                  {item.EventTypeName}
+                </option>
                   ))}
-              </select>
+            </select>
           </div>
         </div>
         <div className="dataEvent">
-          <div className="data hosts">
+        <div className="data hosts"
+          // name="basic"
+          // onFinish={handleSubmitHost}
+          // autoComplete="off"
+        >
               <div className='plusHost'>
                 <label htmlFor="">รายนาม-เจ้าภาพ</label>
                 <IoIosAdd className='icon plusHosts' />
-              </div>
-              {/* <input 
+            </div>
+              <input 
                 type="text" 
                 id="้host1" 
                 className="้host h1" 
                 placeholder='1.'
                 name="HostName"
                 onChange={handleInput}
-                required 
-                /> */}
-              {/* <input 
+                // required 
+                /> 
+               {/* <input 
                 type="text" 
                 id="้host2" 
                 className="้host h2" 
                 placeholder='2.'
                 name="Email"
                 onChange={handleInput}
-                required />
+                 // required 
+              />
                 
               <input 
                 type="text" 
@@ -138,7 +193,7 @@ function CreateEventRequest() {
                 placeholder='3.'
                 name="Email"
                 onChange={handleInput}
-                required 
+                // required 
               /> */}
           </div>
           <div className="data dateTimeEvent">
@@ -151,13 +206,15 @@ function CreateEventRequest() {
                   id="" 
                   name="DateBegin"
                   onChange={handleInput}
-                  required />
+                // required
+              />
                 <input
                   type="date"
                   id="" 
                   name="DateEnd"
                   onChange={handleInput}
-                  required />
+                // required
+              />
                 <label htmlFor="">เวลาเริ่มกิจกรรม</label>
                 <label htmlFor="">ถึง</label>
                 <input
@@ -165,13 +222,15 @@ function CreateEventRequest() {
                   id="" 
                   name="TimeOfBegin"
                   onChange={handleInput}
-                  required />
+              // required 
+              />
                 <input
                   type="time"
                   id="" 
                   name="TimeOfEnd"
                   onChange={handleInput}
-                  required />
+              // required 
+              />
               </div>
           </div>
           <div className="data tel">
@@ -179,7 +238,8 @@ function CreateEventRequest() {
             <input type="text" id="" placeholder='กรอกเบอร์โทร Ex.04444444444' className='item'
               name="UserTel"
               onChange={handleInput}
-              required/>
+            // required
+            />
           </div>
           {/* <div className="data place">
             <label htmlFor="">สถานที่จัดงาน (ในวัด)</label>
@@ -200,19 +260,19 @@ function CreateEventRequest() {
             <input type="text" id="" placeholder='กรอกที่ตั้ง เช่น 111/3 บ.สุรนารี ต.สุรนารี อ.เมืองนครราชสีมา จ.นครราชสีมา'
               name="OutPlace"
               onChange={handleInput}
-              required/>
+            />
             </div>
-          {/* <div className="data entertrainment">
+          <div className="data entertrainment">
             <label htmlFor="">กิจกรรมนี้เป็นมหรสพใช่หรือไม่<span className='more'> (หากใช่กรุนากรอกเลขที่กิจกกรมที่เป็นกิจกรรมหลัก)</span></label>
             <div className='entertrainments'>
               <input type="radio" id="switch_left" name="switchToggle" value=""/> <label htmlFor="switch_left">ใช่</label>
               <input type="radio" id="switch_right" name="switchToggle" value="" /> <label htmlFor="switch_right">ไม่ใช่</label>
             </div>
-            <input type="number"  id="" className='noEntertrainment' placeholder='เลขที่คำขอกิจกรรม'
+            <input type="text"  id="" className='noEntertrainment' placeholder='เลขที่คำขอกิจกรรม'
               name="EventID"
               onChange={handleInput}
-              required/>
-          </div> */}
+            />
+          </div>
           <div className="data description">
             <label htmlFor="">คำอธิบายกิจกรรม</label>
             <textarea

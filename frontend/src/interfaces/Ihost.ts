@@ -1,5 +1,8 @@
+import { EventsInterface } from "./IEvent";
 export interface HostsInterface {
   ID?: number;
-  HostsName?: string;
+  HostName?: string;
+  EventID?: number;
+  Event?: EventsInterface;
 }
 

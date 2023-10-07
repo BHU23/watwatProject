@@ -41,13 +41,26 @@ func SetupDatabease(){
 	db = database
 
 	// EventType Data
-	Pawat := EventType{
-		Name: "เพวศ",
+	eventType := []EventType{
+		{EventTypeName: "บวช"},
+		{EventTypeName: "เพวส"},
+		{EventTypeName: "บุญ"},
+		{EventTypeName: "ศพ"},
+		{EventTypeName: "กฐิน"},
 	}
-	db.Model(&EventType{}).Create(&Pawat)
 
-	Sop := EventType{
-		Name: "ศพ",
+	for _, event := range eventType {
+		db.Create(&event) // Assuming 'db' is your GORM database instance
 	}
-	db.Model(&EventType{}).Create(&Sop)
-}
+	statuses := []Status{
+		{StatusName: "รออนุมัติ"},
+		{StatusName: "อนุมัติ"},
+		{StatusName: "ไม่อนุมัติ"},
+		{StatusName: "รอจัดงาน"},
+		{StatusName: "จัดงานแล้ว"},
+	}
+
+	for _, statuses := range statuses {
+		db.Create(&statuses) // Assuming 'db' is your GORM database instance
+	}
+	}

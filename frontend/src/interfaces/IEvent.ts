@@ -1,5 +1,5 @@
 import { EventTypesInterface } from "./IEventType";
-
+import { StatusesInterface } from "./IStatus";
 export interface EventsInterface {
 
   ID?: number;
@@ -11,9 +11,12 @@ export interface EventsInterface {
   OutPlace?: string;
   UserTel?: string;
   Description?: string | null;
-  // EventID?: EventTypesInterface;
+  EventID?: number | null ;
+  ParentEvent?: EventsInterface | null;
   EventTypeID?: number;
   EventType?: EventTypesInterface;
-  // StatusID?: number | null;
+  StatusID?: number;
+  Status?: StatusesInterface;
 
+  HostName?: string;
 }
