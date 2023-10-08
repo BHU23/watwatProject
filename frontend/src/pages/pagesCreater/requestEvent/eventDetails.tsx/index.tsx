@@ -7,6 +7,7 @@ Route,
 Link,
 } from "react-router-dom";
 import SidebarCreater from '../../../../navbar/sidebarCreater';
+import { Form } from 'antd';
 function EventDetails() {
   return (
     <div className='warpperAddEvent details'>
@@ -14,14 +15,14 @@ function EventDetails() {
         <SidebarCreater></SidebarCreater>
       </div>
       <div className="contantAddEvent details">
-        <div className="title"><span>คำขอจัดกิจกรรม</span></div>
+        <div className="title"><span>รายละเอียดคำขอจัดกิจกรรม</span></div>
         <div className="title nameEvent"><span>งานผ้าป่า</span></div>
         <div className="requestEvent-detail">
         <div className="hostsName">
-          <div className='title-namedata'><span>เลขที่แจ้งคำขอ</span></div>
+          {/* <div className='title-namedata'><span>เลขที่แจ้งคำขอ</span></div>
           <div className='title-namedata'><span>วันที่-เวลาที่ขอ</span></div>
           <div className="detail-data"><span>1001</span></div>
-          <div className="detail-data"><span>15 กันยายน 2566 14.00</span></div>
+          <div className="detail-data"><span>15 กันยายน 2566 14.00</span></div> */}
           <div className='title-namedata'><span>วันจัดงาน</span></div>
           <div className='title-namedata'><span>เบอร์โทรศัพท์</span></div>
           <div className="detail-data"><span>15 กันยายน 2566</span></div>
@@ -41,6 +42,10 @@ function EventDetails() {
         <div className='title-namedata'><span>รายละเอียดเพิ่มเติม</span></div>
         <div className="detail-data"><span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit veniam eos ratione. Sed velit ipsam temporibus ex quis pariatur tempore voluptate ad, minima mollitia ipsa veritatis provident. Eum, ex alias.Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit veniam eos ratione. Sed velit ipsam temporibus ex quis pariatur tempore voluptate ad, minima mollitia ipsa veritatis provident. Eum, ex alias.</span></div>
         </div>
+        <Form className="formNote">
+          <div className="้note"><span>ระบุหมายเหตุ: </span></div>
+          <input type="text"  className="้noteData"/>
+        </Form>
         <div>
           <div className="filterPage">
             <div className="filter">

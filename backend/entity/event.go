@@ -26,6 +26,6 @@ type Event struct {
 
 	ChildEvents []Event    `gorm:"foreignKey:EventID"`
 	Hosts       []Host     `gorm:"foreignKey:EventID"`
-	// Requests    []Request  `gorm:"foreignKey:EventID"`
-	// PlaceUses   []PlaceUse `gorm:"foreignKey:EventID"`
+	Requests    []Request  `gorm:"foreignKey:EventID"`
+	PlaceUses   []PlaceUse `gorm:"foreignKey:EventID"`
 }

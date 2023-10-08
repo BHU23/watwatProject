@@ -2,10 +2,8 @@ export interface RequestInterface {
 
     ID?: number;
     Note?: string | null;
-    DateOfRequest?: Date;
-    TimeOfRequest?: string;
-    DateOfApproved?: Date | null;
-    TimeOfApproved?: string | null;
+    DateTimeOfRequest?: Date;
+    DateTimeOfApproved?: Date;
     EventID?: number | null;
     PlaceUseID?: number | null;
     ItemLoanID?: number | null;

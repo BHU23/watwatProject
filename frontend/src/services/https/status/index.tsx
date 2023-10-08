@@ -22,7 +22,26 @@ async function GetStatuses() {
 
   return res;
 }
+async function GetStatusById(id: Number | undefined) {
+  const requestOptions = {
+    method: "GET"
+  };
+
+  let res = await fetch(`${apiUrl}/status/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 
 export {
-  GetStatuses
+  GetStatuses,
+  GetStatusById,
 };

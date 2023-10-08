@@ -10,7 +10,7 @@ type Status struct {
 	StatusName  string 
 
 	Events []Event `gorm:"foreignKey:StatusID"`
-	// Requests []Request `gorm:"foreignKey:StatusID"`
+	Requests []Request `gorm:"foreignKey:StatusID"`
 	// PlaceUses []PlaceUse `gorm:"foreignKey:StatusID"`
 	// ItemLoans []ItemLoan `gorm:"foreignKey:StatusID"`
 	// Items []Item `gorm:"foreignKey:StatusID"`

@@ -7,80 +7,106 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type eventPayload struct {
+	EventName   string
+	DateBegin   string
+	TimeOfBegin string
+	DateEnd     string
+	TimeOfEnd   string
+	OutPlace    string
+	UserTel     string
+	Description string
+	EventID     *uint
+	EventTypeID *uint
+
+	// ใช้สร้าง Event,Request
+	StatusID    *uint
+
+	// ใช้สร้าง Host
+	HostName    string
+
+	// ใช้สร้าง Request
+	DateOfRequest 	string
+	MemberID   		*uint
+	WatID 			*uint
+}
+
 // POST /Events
-func CreateEvent(c *gin.Context) {
-	var event entity.Event
+func CreateEventRequest(c *gin.Context) {
+	var data eventPayload
 	var eventType entity.EventType
 	var eventMain entity.Event
 	var status entity.Status
 
-	var host entity.Host
-
-	// bind เข้าตัวแปร Event
-	if err := c.ShouldBindJSON(&event); err != nil {
+	// bind เข้าตัวแปร data ใช้สร้าง Event, Host, Request 
+	if err := c.ShouldBindJSON(&data); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	// bind เข้าตัวแปร host
-	if err := c.ShouldBindJSON(&host); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	// ค้นหา eventType ด้วย id
-	if tx := entity.DB().Where("id = ?", event.EventTypeID).First(&eventType); tx.RowsAffected == 0 {
+	// ค้นหา eventType ด้วย id ใช้สร้าง Event
+	if tx := entity.DB().Where("id = ?", data.EventTypeID).First(&eventType); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "eventType not found"})
 		return
 	}
 
-	// ค้นหา eventMain ด้วย id
-	if event.EventID == nil {
-
-	} else {
-		if tx := entity.DB().Where("id = ?", *event.EventID).First(&eventMain); tx.RowsAffected == 0 {
+	// ค้นหา eventMain ด้วย id ใช้สร้าง Event
+	if data.EventID != nil {
+		if tx := entity.DB().Where("id = ?", *data.EventID).First(&eventMain); tx.RowsAffected == 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "eventMain not found"})
 			return
 		}
 	}
 
-	// ค้นหา status ด้วย id
-	if tx := entity.DB().Where("id = ?", event.StatusID).First(&status); tx.RowsAffected == 0 {
+	// ค้นหา status ด้วย id // ใช้สร้าง Event Request
+	if tx := entity.DB().Where("id = ?", data.StatusID).First(&status); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "status not found"})
 		return
 	}
 
-	u := entity.Event{
-		EventName:   event.EventName,
-		DateBegin:   event.DateBegin,
-		TimeOfBegin: event.TimeOfBegin,
-		DateEnd:     event.DateEnd,
-		TimeOfEnd:   event.TimeOfEnd,
-		OutPlace:    event.OutPlace,
-		UserTel:     event.UserTel,
-		Description: event.Description,
-		EventID:     event.EventID,
+	event := entity.Event{
+		EventName:   data.EventName,
+		DateBegin:   data.DateBegin,
+		TimeOfBegin: data.TimeOfBegin,
+		DateEnd:     data.DateEnd,
+		TimeOfEnd:   data.TimeOfEnd,
+		OutPlace:    data.OutPlace,
+		UserTel:     data.UserTel,
+		Description: data.Description,
+		EventID:     data.EventID,
 		EventType:   eventType,
 		Status:      status,
 	}
 	// บันทึก
-	if err := entity.DB().Create(&u).Error; err != nil {
+	if err := entity.DB().Create(&event).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	h := entity.Host{
-		HostName: 	host.HostName,
-		EventID:    &u.ID,
+	host := entity.Host{
+		HostName: data.HostName,
+		EventID:  &event.ID,
 	}
 
-	if err := entity.DB().Create(&h).Error; err != nil {
+	if err := entity.DB().Create(&host).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": u})
-	c.JSON(http.StatusOK, gin.H{"data": h})
+	request := entity.Request{
+		DateTimeOfRequest: 	data.DateOfRequest,
+		MemberID:   	data.MemberID,
+		WatID: 			data.WatID,
+		EventID:     	&event.ID,
+		Status:      	status,
+	}
+
+	if err := entity.DB().Create(&request).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": gin.H{"event": event, "host": host}})
 }
 
 // GET /event/:id

@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"time"
+	// "time"
 	"gorm.io/gorm"
 
 )
@@ -9,10 +9,8 @@ import (
 type Request struct {
 	gorm.Model
 	Note  string 
-	DateOfRequest string 
-	TimeOfRequest time.Time
-	DateOfApproved string
-	TimeOfApproved time.Time
+	DateTimeOfRequest string
+	DateTimeOfApproved string
 
 	EventID   *uint
 	Event Event `gorm:"foreignKey:EventID"`
@@ -25,4 +23,7 @@ type Request struct {
 
 	StatusID *uint
 	Status   Status `gorm:"foreignKey:StatusID"`
+
+	WatID *uint
+	Wat   Wat `gorm:"foreignKey:WatID"`
 }

@@ -28,15 +28,16 @@ func SetupDatabease(){
 		// &Item{},
 		// &ItemLoan{},
 		// &ItemLoanItem{},
-		// &Member{},
+		&Member{},
 		// &MemberRequest{},
 		// &Monk{},
 		// &Place{},
 		// &PlaceUse{},
 		// &PlaceUsePlace{},
-		// &Request{},
+		&Request{},
 		// &Role{},
 		&Status{},
+		&Wat{},
 	)
 	db = database
 

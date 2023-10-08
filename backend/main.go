@@ -16,13 +16,14 @@ func main() {
 	// Events Routes
 	r.GET("/events", controller.ListEvents)
 	r.GET("/events/:id", controller.GetEvent)
-	r.POST("/events", controller.CreateEvent)
+	r.POST("/eventRequests", controller.CreateEventRequest)
 	r.PATCH("/events", controller.UpdateEvent)
 	r.DELETE("/events/:id", controller.DeleteEvent)
 	// Gender Routes
 	r.GET("/eventTypes", controller.ListEventTypes)
 	// Status Routes
 	r.GET("/statuses", controller.ListEventTypes)
+	r.GET("/status/:id", controller.GetStatus)
 	
 	r.Run()
 	

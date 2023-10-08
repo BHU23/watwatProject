@@ -1,4 +1,4 @@
-import { EventsInterface } from "../../../interfaces/IEvent";
+import { EventRequestsInterface } from "../../../interfaces/IEventRequest";
 
 const apiUrl = "http://localhost:8080";
 
@@ -45,7 +45,6 @@ async function GetEventTypes() {
   return res;
 }
 
-
 async function DeleteEventByID(id: Number | undefined) {
   const requestOptions = {
     method: "DELETE"
@@ -83,14 +82,14 @@ async function GetEventById(id: Number | undefined) {
 }
 
 
-async function CreateEvent(data: EventsInterface) {
+async function CreateEvent(data: EventRequestsInterface) {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/events`, requestOptions)
+  let res = await fetch(`${apiUrl}/eventRequests`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -103,7 +102,7 @@ async function CreateEvent(data: EventsInterface) {
   return res;
 }
 
-async function UpdateEvent(data: EventsInterface) {
+async function UpdateEvent(data: EventRequestsInterface) {
   const requestOptions = {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },

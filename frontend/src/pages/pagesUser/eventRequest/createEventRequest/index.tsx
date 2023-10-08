@@ -4,11 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import {Form, message,} from "antd";
 import { IoIosAdd } from "react-icons/io";
 import SubmitButton from '../../../../component/bnt/submitButton';
-import { EventsInterface } from "../../../../interfaces/IEvent";
-import { HostsInterface } from '../../../../interfaces/IHost';
+import { EventRequestsInterface } from "../../../../interfaces/IEventRequest";
 import { EventTypesInterface } from "../../../../interfaces/IEventType";
-import { CreateEvent, GetEventTypes, GetEvents } from "../../../../services/https/event";
-import { CreateHost } from '../../../../services/https/host';
+import { CreateEvent, GetEventTypes } from "../../../../services/https/event";
 
 function CreateEventRequest() {
   let navigate = useNavigate();
@@ -27,6 +25,9 @@ function CreateEventRequest() {
       EventTypeID: 1 ,
       StatusID: 1,
       HostName: '',
+      DateTimeOfRequest: '',
+      MemberID: 1,
+	    WatID: 1,
   })
   const handleInput  = (e:any) => {
     const { name, value } = e.target;
@@ -45,7 +46,7 @@ function CreateEventRequest() {
       } else {
         setInput({
           ...input,
-          [name]: null, // Convert the value to an integer
+          [name]: null, 
         });
       }
     }else {
@@ -56,8 +57,7 @@ function CreateEventRequest() {
     }
   };
 
-  // const handleSubmit = async (values: EventsInterface, values1: HostsInterface) => {
-  const handleSubmit = async (values: EventsInterface) => {
+  const handleSubmit = async (values: EventRequestsInterface) => {
       values.EventName = input.EventName
       values.DateBegin = input.DateBegin
       values.TimeOfBegin = input.TimeOfBegin
@@ -69,7 +69,12 @@ function CreateEventRequest() {
       values.EventID = input.EventID
       values.EventTypeID = input.EventTypeID
       values.StatusID = input.StatusID
+  
       values.HostName = input.HostName
+     
+      values.DateTimeOfRequest = input.DateTimeOfRequest
+      values.MemberID = input.MemberID
+      values.WatID = input.WatID
     
       let res = await CreateEvent(values);
       if (res.status) {
